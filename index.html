@@ -4,10 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>先生居場所一覧</title>
+  <style>
+    body {
+      font-family: "Hiragino Sans", "Meiryo", sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    thead {
+      background: #4CAF50;
+      color: white;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    tr:hover {
+      background: #f1f8f1;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
 </head>
 <body>
   <h1>先生居場所一覧</h1>
-  <table border="1">
+  <table>
     <thead>
       <tr>
         <th>先生名</th>
@@ -18,6 +66,8 @@
     </thead>
     <tbody id="data-body"></tbody>
   </table>
+
+  <button onclick="goToInput()">先生の居場所を入力する</button>
 
   <script>
     const DATA_URL = 'https://script.google.com/macros/s/AKfycbwD5TQ3H7y7E1bcGj7Uc1p5vak2-VpSfYQl0-8GUc2TRHdjaSS-3WrnerWC96xBQoTK/exec'; // JSONを返すURL
@@ -43,15 +93,11 @@
     loadData();
     // 10秒ごとに自動更新
     setInterval(loadData, 10000);
+
+    function goToInput() {
+      window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/view.html';
+    }
   </script>
-
-  <button onclick="goToInput()">先生の居場所を入力する</button>
-
-<script>
-  function goToInput() {
-    // 入力ページのURLを指定
-    window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/view.html';
-  }
-</script>
 </body>
 </html>
+

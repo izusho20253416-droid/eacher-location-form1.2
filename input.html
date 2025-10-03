@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>先生居場所一覧</title>
+  <title>先生居場所入力</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
     body {
       font-family: "Hiragino Sans", "Meiryo", sans-serif;
@@ -11,128 +12,125 @@
       margin: 0;
       padding: 20px;
     }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      color: #333;
     }
-    table {
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select {
       width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    thead {
-      background: #4CAF50;
-      color: white;
-    }
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-      word-break: break-word; /* 長い単語を折り返す */
-    }
-    tr:hover {
-      background: #f1f8f1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
     }
     button {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 20px;
+      width: 100%;
+      padding: 12px;
       background: #4CAF50;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s;
     }
     button:hover {
       background: #45a049;
     }
-
-    /* ▼ スマホ画面向け（600px以下） ▼ */
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-        width: 100%;
-      }
-      thead {
-        display: none; /* ヘッダー非表示 */
-      }
-      tr {
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        padding: 10px;
-        background: #fff;
-      }
-      td {
-        text-align: left;
-        padding: 8px 10px;
-        border: none;
-        border-bottom: 1px solid #eee;
-      }
-      td:last-child {
-        border-bottom: none;
-      }
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: block;
-        color: #4CAF50;
-        margin-bottom: 4px;
-      }
-    }
   </style>
 </head>
 <body>
-  <h1>先生居場所一覧</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>先生名</th>
-        <th>部屋名</th>
-        <th>コメント</th>
-        <th>更新日時</th>
-      </tr>
-    </thead>
-    <tbody id="data-body"></tbody>
-  </table>
-
-  <button onclick="goToInput()">先生の居場所を入力する</button>
+  <div class="container">
+    <h1>先生居場所入力</h1>
+    <form id="teacherForm">
+      <label>先生名：
+        <input type="text" name="teacher" id="teacher" required>
+      </label>
+      <label>部屋名：
+        <select name="room" id="room" required>
+          <option value="職員室">職員室</option>
+          <option value="生徒指導室">生徒指導室</option>
+          <option value="進路指導室">進路指導室</option>
+          <option value="商業センター">商業センター</option>
+          <option value="1-1">1-1</option> 
+          <option value="1-2">1-2</option>
+          <option value="1-3">1-3</option>
+          <option value="1-4">1-4</option>   
+          <option value="2-1">2-1</option>
+          <option value="2-2">2-2</option>
+          <option value="2-3">2-3</option>
+          <option value="2-4">2-4</option>
+          <option value="3-1">3-1</option>
+          <option value="3-2">3-2</option> 
+          <option value="3-3">3-3</option>
+          <option value="3-4">3-4</option>
+          <option value="第一演習室">第一演習室</option>
+          <option value="第二演習室">第二演習室</option>
+          <option value="第三演習室">第三演習室</option>
+          <option value="第四演習室">第四演習室</option>
+          <option value="第五演習室">第五演習室</option>
+          <option value="会議室">会議室</option>
+          <option value="ミーティングルーム">ミーティングルーム</option>
+          <option value="集会室">集会室</option> 
+          <option value="図書室">図書室</option>
+          <option value="視聴覚室">視聴覚室</option>     
+          <option value="被服室">被服室</option>
+          <option value="商業センター">商業センター</option>
+          <option value="体育館">体育館</option>
+          <option value="デジタル工房">デジタル工房</option>
+          <option value="保健室">保健室</option>
+          <option value="第１パソコン室">第１パソコン室</option>
+          <option value="第２パソコン室">第２パソコン室</option>
+          <option value="第３パソコン室">第３パソコン室</option> 
+          <option value="総合実践室">総合実践室</option>
+          <option value="美術室">美術室</option>
+          <option value="音楽室">音楽室</option>
+          <option value="茶道室">茶道室</option>
+          <option value="調理実習室">調理実習室</option>
+        </select>
+      </label>
+      <label>コメント：
+        <input type="text" name="comment" id="comment" placeholder="例：外出中・出張など">
+      </label>
+      <button type="submit">確定</button>
+    </form>
+  </div>
 
   <script>
-    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec'; // JSONを返すURL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4-NbydtVIHt8ckHyl6jJkT9S9jw0cTN44tf_udPYZvf_pdlgblvGPpAk51_10l2VX/exec';
 
-    async function loadData() {
-      const res = await fetch(DATA_URL);
-      const data = await res.json();
-      const tbody = document.getElementById('data-body');
-      tbody.innerHTML = '';
+    document.getElementById('teacherForm').addEventListener('submit', (e) => {
+      e.preventDefault();
 
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td data-label="先生名">${row.teacher}</td>
-          <td data-label="部屋名">${row.room}</td>
-          <td data-label="コメント">${row.comment || ''}</td>
-          <td data-label="更新日時">${new Date(row.updated).toLocaleString()}</td>
-        `;
-        tbody.appendChild(tr);
+      const teacher = document.getElementById('teacher').value;
+      const room = document.getElementById('room').value;
+      const comment = document.getElementById('comment').value;
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ teacher, room, comment })
+      })
+      .then(res => res.text())
+      .then(() => {
+        alert('送信しました！');
+        // 入力が終わったら一覧に戻る
+        window.location.href = 'index.html';
+      })
+      .catch(err => {
+        console.error(err);
+        alert('送信に失敗しました');
       });
-    }
-
-    loadData();
-    // 10秒ごとに自動更新
-    setInterval(loadData, 10000);
-
-    function goToInput() {
-      window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/input.html';
-    }
+    });
   </script>
 </body>
 </html>

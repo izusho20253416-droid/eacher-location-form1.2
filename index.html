@@ -32,9 +32,18 @@
       padding: 12px;
       text-align: center;
       border-bottom: 1px solid #eee;
+      word-break: break-word; /* 長い単語も折り返し */
     }
     tr:hover {
       background: #f1f8f1;
+    }
+    /* コメント列だけ特別ルール */
+    td:nth-child(3) {
+      text-align: left;      /* 読みやすく左寄せ */
+      max-width: 250px;      /* スマホで広すぎないように調整 */
+      max-height: 3em;       /* 最大3行分くらい */
+      overflow-y: auto;      /* 長すぎる場合はスクロール */
+      display: block;        /* スクロールを有効にする */
     }
     button {
       display: block;
@@ -83,7 +92,7 @@
         tr.innerHTML = `
           <td>${row.teacher}</td>
           <td>${row.room}</td>
-          <td>${row.comment}</td>
+          <td>${row.comment || ''}</td>
           <td>${new Date(row.updated).toLocaleString()}</td>
         `;
         tbody.appendChild(tr);

@@ -32,18 +32,10 @@
       padding: 12px;
       text-align: center;
       border-bottom: 1px solid #eee;
-      word-break: break-word; /* 長い単語も折り返し */
+      word-break: break-word; /* 長い単語を折り返す */
     }
     tr:hover {
       background: #f1f8f1;
-    }
-    /* コメント列だけ特別ルール */
-    td:nth-child(3) {
-      text-align: left;      /* 読みやすく左寄せ */
-      max-width: 250px;      /* スマホで広すぎないように調整 */
-      max-height: 3em;       /* 最大3行分くらい */
-      overflow-y: auto;      /* 長すぎる場合はスクロール */
-      display: block;        /* スクロールを有効にする */
     }
     button {
       display: block;
@@ -59,6 +51,41 @@
     }
     button:hover {
       background: #45a049;
+    }
+
+    /* ▼ スマホ画面向け（600px以下） ▼ */
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+      }
+      thead {
+        display: none; /* ヘッダー非表示 */
+      }
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        padding: 10px;
+        background: #fff;
+      }
+      td {
+        text-align: left;
+        padding: 8px 10px;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+      td:last-child {
+        border-bottom: none;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        color: #4CAF50;
+        margin-bottom: 4px;
+      }
     }
   </style>
 </head>
@@ -90,10 +117,10 @@
       data.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td>${row.teacher}</td>
-          <td>${row.room}</td>
-          <td>${row.comment || ''}</td>
-          <td>${new Date(row.updated).toLocaleString()}</td>
+          <td data-label="先生名">${row.teacher}</td>
+          <td data-label="部屋名">${row.room}</td>
+          <td data-label="コメント">${row.comment || ''}</td>
+          <td data-label="更新日時">${new Date(row.updated).toLocaleString()}</td>
         `;
         tbody.appendChild(tr);
       });

@@ -28,13 +28,17 @@
       display: block;
       margin: 10px 0 5px;
     }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
+input, select {
+  width: 100%;
+  padding: 10px;              /* 高さを合わせるため少し増やす */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 1em;
+  height: 42px;               /* ← input と select を同じ高さに固定 */
+  box-sizing: border-box;     /* パディング込みで幅調整 */
+}
+
     button {
       width: 100%;
       padding: 12px;

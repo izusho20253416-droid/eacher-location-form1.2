@@ -32,7 +32,7 @@
       padding: 12px;
       text-align: center;
       border-bottom: 1px solid #eee;
-      word-break: break-word;
+      word-break: break-word; /* 長い単語を折り返す */
     }
     tr:hover {
       background: #f1f8f1;
@@ -60,7 +60,7 @@
         width: 100%;
       }
       thead {
-        display: none;
+        display: none; /* ヘッダー非表示 */
       }
       tr {
         margin-bottom: 15px;
@@ -87,18 +87,52 @@
         margin-bottom: 4px;
       }
     }
+  </style>
+</head>
+<body>
+  <h1>先生居場所一覧</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>先生名</th>
+        <th>部屋名</th>
+        <th>コメント</th>
+        <th>更新日時</th>
+      </tr>
+    </thead>
+    <tbody id="data-body"></tbody>
+  </table>
 
-    /* ▼ 通知のデザイン ▼ */
-    .notification {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(76, 175, 80, 0.95);
-      color: white;
-      padding: 20px 40px;
-      border-radius: 10px;
-      font-size: 1.3em;
-      font-weight: bold;
-      text-
+  <button onclick="goToInput()">先生の居場所を入力する</button>
+
+  <script>
+    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec'; // JSONを返すURL
+
+    async function loadData() {
+      const res = await fetch(DATA_URL);
+      const data = await res.json();
+      const tbody = document.getElementById('data-body');
+      tbody.innerHTML = '';
+
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="先生名">${row.teacher}</td>
+          <td data-label="部屋名">${row.room}</td>
+          <td data-label="コメント">${row.comment || ''}</td>
+          <td data-label="更新日時">${new Date(row.updated).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    loadData();
+    // 10秒ごとに自動更新
+    setInterval(loadData, 5000);
+
+    function goToInput() {
+      window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/input.html';
+    }
+  </script>
+</body>
+</html>

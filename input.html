@@ -87,29 +87,6 @@
         margin-bottom: 4px;
       }
     }
-
-    /* ▼ 通知のデザイン ▼ */
-    .notification {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(76, 175, 80, 0.95);
-      color: white;
-      padding: 20px 40px;
-      border-radius: 10px;
-      font-size: 1.5em;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 2000;
-      animation: fadein 0.5s;
-    }
-    @keyframes fadein {
-      from { opacity: 0; transform: translate(-50%, -60%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
   </style>
 </head>
 <body>
@@ -128,11 +105,8 @@
 
   <button onclick="goToInput()">先生の居場所を入力する</button>
 
-  <!-- 通知エリア -->
-  <div id="notification" class="notification">送信できました！</div>
-
   <script>
-    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec';
+    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec'; // JSONを返すURL
 
     async function loadData() {
       const res = await fetch(DATA_URL);
@@ -153,30 +127,12 @@
     }
 
     loadData();
+    // 10秒ごとに自動更新
     setInterval(loadData, 10000);
 
     function goToInput() {
       window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/input.html';
     }
-
-    // ▼ 通知の表示処理 ▼
-    function showNotification(message) {
-      const notification = document.getElementById("notification");
-      notification.textContent = message;
-      notification.style.display = "block";
-
-      setTimeout(() => {
-        notification.style.display = "none";
-      }, 2000);
-    }
-
-    // 入力画面から遷移したときに通知を出す
-    window.addEventListener("load", () => {
-      if (localStorage.getItem("submitted") === "true") {
-        showNotification("送信できました！");
-        localStorage.removeItem("submitted"); // 1回だけ表示
-      }
-    });
   </script>
 </body>
 </html>

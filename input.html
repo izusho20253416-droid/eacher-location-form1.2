@@ -28,17 +28,14 @@
       display: block;
       margin: 10px 0 5px;
     }
-input, select {
-  width: 100%;
-  padding: 10px;              /* 高さを合わせるため少し増やす */
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 1em;
-  height: 42px;               /* ← input と select を同じ高さに固定 */
-  box-sizing: border-box;     /* パディング込みで幅調整 */
-}
-
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
     button {
       width: 100%;
       padding: 12px;
@@ -51,6 +48,39 @@ input, select {
     button:hover {
       background: #45a049;
     }
+
+    /* ▼ 通知のスタイル ▼ */
+    .notification {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 2px solid #4CAF50;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 25px 30px;
+      text-align: center;
+      z-index: 1000;
+      display: none;
+      width: 80%;
+      max-width: 300px;
+    }
+    .notification h2 {
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+    .notification button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+    .notification button:hover {
+      background: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -61,12 +91,13 @@ input, select {
         <input type="text" name="teacher" id="teacher" required>
       </label>
       <label>部屋名：
-        <select name="room" id="room" required>  
+        <select name="room" id="room" required>    
           <option value="本日不在" class="absent-option">本日不在</option>
           <option value="職員室">職員室</option>
           <option value="生徒指導室">生徒指導室</option>
           <option value="進路指導室">進路指導室</option>
           <option value="商業センター">商業センター</option>
+          <option value="保健室">保健室</option>
           <option value="1-1">1-1</option> 
           <option value="1-2">1-2</option>
           <option value="1-3">1-3</option>
@@ -92,7 +123,6 @@ input, select {
           <option value="被服室">被服室</option>
           <option value="体育館">体育館</option>
           <option value="デジタル工房">デジタル工房</option>
-          <option value="保健室">保健室</option>
           <option value="第１パソコン室">第１パソコン室</option>
           <option value="第２パソコン室">第２パソコン室</option>
           <option value="第３パソコン室">第３パソコン室</option> 
@@ -108,6 +138,12 @@ input, select {
       </label>
       <button type="submit">確定</button>
     </form>
+  </div>
+
+  <!-- ✅ 送信完了通知 -->
+  <div id="notification" class="notification">
+    <h2>✅ 送信が完了しました</h2>
+    <button onclick="closeNotification()">閉じる</button>
   </div>
 
   <script>
@@ -126,15 +162,23 @@ input, select {
       })
       .then(res => res.text())
       .then(() => {
-        alert('送信しました！');
-        // 入力が終わったら一覧に戻る
-        window.location.href = 'index.html';
+        showNotification(); // ✅ 通知を表示
       })
       .catch(err => {
         console.error(err);
         alert('送信に失敗しました');
       });
     });
+
+    function showNotification() {
+      document.getElementById('notification').style.display = 'block';
+    }
+
+    function closeNotification() {
+      document.getElementById('notification').style.display = 'none';
+      // 一覧に戻る
+      window.location.href = 'index.html';
+    }
   </script>
 </body>
 </html>

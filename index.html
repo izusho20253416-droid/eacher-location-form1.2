@@ -32,10 +32,14 @@
       padding: 12px;
       text-align: center;
       border-bottom: 1px solid #eee;
-      word-break: break-word; /* 長い単語を折り返す */
+      word-break: break-word;
     }
     tr:hover {
       background: #f1f8f1;
+    }
+    .absent {
+      color: red;
+      font-weight: bold;
     }
     button {
       display: block;
@@ -53,15 +57,13 @@
       background: #45a049;
     }
 
-    /* ▼ スマホ画面向け（600px以下） ▼ */
+    /* ▼ スマホ向けレイアウト ▼ */
     @media (max-width: 600px) {
       table, thead, tbody, th, td, tr {
         display: block;
         width: 100%;
       }
-      thead {
-        display: none; /* ヘッダー非表示 */
-      }
+      thead { display: none; }
       tr {
         margin-bottom: 15px;
         border: 1px solid #ddd;
@@ -76,15 +78,17 @@
         border: none;
         border-bottom: 1px solid #eee;
       }
-      td:last-child {
-        border-bottom: none;
-      }
+      td:last-child { border-bottom: none; }
       td::before {
         content: attr(data-label);
         font-weight: bold;
         display: block;
         color: #4CAF50;
         margin-bottom: 4px;
+      }
+      .absent {
+        color: red;
+        font-weight: bold;
       }
     }
   </style>
@@ -106,7 +110,7 @@
   <button onclick="goToInput()">先生の居場所を入力する</button>
 
   <script>
-    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec'; // JSONを返すURL
+    const DATA_URL = 'https://script.google.com/macros/s/AKfycbzX8jJ2iiZqkWPrODb34mDC7-KP48_HtnftpNCiJs8Z0Nw2jDRcCpKzF0TCFbTUQtJM/exec';
 
     async function loadData() {
       const res = await fetch(DATA_URL);
@@ -116,9 +120,10 @@
 
       data.forEach(row => {
         const tr = document.createElement('tr');
+        const roomClass = row.room === '本日不在' ? 'absent' : '';
         tr.innerHTML = `
           <td data-label="先生名">${row.teacher}</td>
-          <td data-label="部屋名">${row.room}</td>
+          <td data-label="部屋名" class="${roomClass}">${row.room}</td>
           <td data-label="コメント">${row.comment || ''}</td>
           <td data-label="更新日時">${new Date(row.updated).toLocaleString()}</td>
         `;
@@ -127,8 +132,7 @@
     }
 
     loadData();
-    // 10秒ごとに自動更新
-    setInterval(loadData, 5000);
+    setInterval(loadData, 10000);
 
     function goToInput() {
       window.location.href = 'https://izusho20253416-droid.github.io/eacher-location-form1.2/input.html';
@@ -136,3 +140,4 @@
   </script>
 </body>
 </html>
+
